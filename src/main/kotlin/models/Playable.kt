@@ -1,5 +1,5 @@
 package models
 
 interface Playable {
-    fun isBlackjack(): Boolean
+    fun hasBlackjack(): Boolean
 }

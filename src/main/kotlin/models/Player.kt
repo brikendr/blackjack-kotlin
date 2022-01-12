@@ -17,18 +17,23 @@ class Player (val name: String, val isDealer: Boolean) :  Playable {
     }
 
     fun printHand() {
-        print("$name: ")
+        var handStr: String = "$name: "
         for (card in hand) {
-            print("${card.suit}${card.label}, ")
+            handStr = handStr + "${card.label}, "
         }
+        print(handStr.substring(0, handStr.length - 2))
         println()
+    }
+
+    fun getHand(): ArrayList<Card> {
+        return hand
     }
 
     fun reset() {
         hand.clear()
     }
 
-    override fun isBlackjack(): Boolean {
+    override fun hasBlackjack(): Boolean {
         var hasAce = false
         var hasTenner = false
         for (card in hand) {
@@ -43,7 +48,7 @@ class Player (val name: String, val isDealer: Boolean) :  Playable {
     }
 
     fun draw(deck: Deck, maxSum: Int = 17) {
-        var canDraw: Boolean = !isBlackjack() && calculateHandScore() <= maxSum
+        var canDraw: Boolean = !hasBlackjack() && calculateHandScore() <= maxSum
         while (canDraw) {
             var card: Card? = deck.drawCard()
             if (card != null) {
@@ -51,7 +56,7 @@ class Player (val name: String, val isDealer: Boolean) :  Playable {
                 hand.add(card)
                 val score = calculateHandScore()
                 if (score > maxSum) break
-            }
+            } else { break }
         }
 
     }

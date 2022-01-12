@@ -1,8 +1,10 @@
 package models
 
+import java.lang.NumberFormatException
+
 data class Card(val score: Int, val suit: String, val label: String) {
     override fun toString(): String {
-        return "${suit}${label}"
+        return "${label}"
     }
 
     override fun equals(other: Any?): Boolean {
@@ -17,7 +19,13 @@ data class Card(val score: Int, val suit: String, val label: String) {
                 "K" -> 10
                 "Q" -> 10
                 "J" -> 10
-                else -> score.toInt()
+                else -> {
+                    try {
+                        score.toInt()
+                    } catch (e: NumberFormatException) {
+                        0
+                    }
+                }
             }
         }
     }
